@@ -75,7 +75,6 @@ export class ArticlesDetailsComponent implements OnInit {
     this.uploadImagesService.upload(data)
       .subscribe((data: any) => {
         this.isLoading = false;
-        console.log(data);
         this.article.image = data.location;
       });
   }
