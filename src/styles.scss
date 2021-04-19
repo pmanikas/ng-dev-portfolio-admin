@@ -1,0 +1,41 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~ngx-toastr/toastr';
+@import './assets/scss/black-dashboard.scss';
+
+#toast-container .toast {
+  box-shadow: none !important;
+}
+
+img {
+  object-fit: cover;
+}
+
+.image-container {
+  height: 12rem;
+  width: 12rem;
+}
+
+.list {
+  margin-top: 15px;
+  &__add__button {
+    display: flex;
+    justify-content: flex-end;
+  }
+  &__button {
+    display: flex;
+  }
+  &__item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(45deg, #1e1e2f, #1e1e24);
+    border: none;
+  }
+  &__item~&__item {
+    border-top: 1px solid #27293d;
+  }
+  &__item__image {
+    width: 40px;
+    height: 40px;
+  }
+}

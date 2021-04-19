@@ -1,0 +1,50 @@
+<form (ngSubmit)="submitHandler()">
+  <div class="image-container">
+    <app-image-upload
+      [src]="article.image"
+      (imageLoaded)="imageLoaded($event)"
+    ></app-image-upload>
+  </div>
+  <div class="form-group">
+    <label for="title">Title</label>
+    <input
+      type="text"
+      class="form-control"
+      id="title"
+      name="title"
+      [(ngModel)]="article.title"
+    />
+  </div>
+  <div class="form-group">
+    <label for="type">Type</label>
+    <input
+      type="text"
+      class="form-control"
+      [(ngModel)]="article.type"
+      id="type"
+      name="type"
+    />
+  </div>
+  <div class="form-group">
+    <label for="url">Url</label>
+    <input
+      type="text"
+      class="form-control"
+      [(ngModel)]="article.url"
+      id="url"
+      name="url"
+    />
+  </div>
+  <div class="form-group">
+    <label for="image">Excerpt</label>
+    <textarea
+      id="excerpt"
+      name="excerpt"
+      class="form-control"
+      [(ngModel)]="article.excerpt"
+      rows="10"
+    >
+    </textarea>
+  </div>
+  <button type="submit" (disabled)="isLoading" class="btn btn-primary">Submit</button>
+</form>
