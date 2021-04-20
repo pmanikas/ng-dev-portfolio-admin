@@ -2,11 +2,14 @@ import { Component, OnInit, ElementRef, OnDestroy } from "@angular/core";
 import { menuItems } from "./../../data/menu-items.data";
 import { Location } from "@angular/common";
 import { Router } from "@angular/router";
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { AuthService } from "src/app/services/auth.service";
+import { AlertService } from "src/app/services/alert.service";
 
 @Component({
   selector: "app-navbar",
   templateUrl: "./navbar.component.html",
-  styleUrls: ["./navbar.component.css"]
+  styleUrls: ["./navbar.component.scss"]
 })
 export class NavbarComponent implements OnInit, OnDestroy {
   private listTitles: any[] = [];
@@ -14,7 +17,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
   mobile_menu_visible: any = 0;
   private toggleButton: any;
   private sidebarVisible: boolean;
-  private $layer: any = document.getElementsByClassName("close-layer")[0];
 
   public isCollapsed = true;
 
@@ -24,6 +26,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
     location: Location,
     private element: ElementRef,
     private router: Router,
+    private modalService: NgbModal,
+    public authService: AuthService,
+    private alertService: AlertService
   ) {
     this.location = location;
     this.sidebarVisible = false;
@@ -41,14 +46,14 @@ export class NavbarComponent implements OnInit, OnDestroy {
    };
   ngOnInit() {
     window.addEventListener("resize", this.updateColor);
-    this.listTitles = menuItems.filter(listTitle => listTitle);
+    this.listTitles = menuItems.filter((listTitle: any) => listTitle);
     const navbar: HTMLElement = this.element.nativeElement;
     this.toggleButton = navbar.getElementsByClassName("navbar-toggler")[0];
     this.router.events.subscribe(event => {
       this.sidebarClose();
-
-      if (this.$layer) {
-        this.$layer.remove();
+      var $layer: any = document.getElementsByClassName("close-layer")[0];
+      if ($layer) {
+        $layer.remove();
         this.mobile_menu_visible = 0;
       }
     });
@@ -112,10 +117,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
     const html = document.getElementsByTagName("html")[0];
 
     if (this.mobile_menu_visible == 1) {
+      let $layer: any;
       // $('html').removeClass('nav-open');
       html.classList.remove("nav-open");
-      if (this.$layer) {
-        this.$layer.remove();
+      if ($layer) {
+        $layer.remove();
       }
       setTimeout(function() {
         $toggle.classList.remove("toggled");
@@ -151,7 +157,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
           $layer.remove();
           $toggle.classList.remove("toggled");
         }, 400);
-      };
+      }
 
       html.classList.add("nav-open");
       this.mobile_menu_visible = 1;
@@ -172,23 +178,30 @@ export class NavbarComponent implements OnInit, OnDestroy {
     return "Dashboard";
   }
 
-  // open(content) {
-  //   this.modalService.open(content, {windowClass: 'modal-search'}).result.then((result) => {
-  //     this.closeResult = `Closed with: ${result}`;
-  //   }, (reason) => {
-  //     this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-  //   });
-  // }
+  open(content: any) {
+    this.modalService.open(content, {windowClass: 'modal-search'}).result.then((result: any) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason: any) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
 
-  // private getDismissReason(reason: any): string {
-  //   if (reason === ModalDismissReasons.ESC) {
-  //     return 'by pressing ESC';
-  //   } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-  //     return 'by clicking on a backdrop';
-  //   } else {
-  //     return  `with: ${reason}`;
-  //   }
-  // }
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return  `with: ${reason}`;
+    }
+  }
+
+  public logoutHandler():void {
+    this.authService.logout();
+    this.alertService.success('Logged out');
+    this.router.navigate(['/auth/login']);
+  }
+
   ngOnDestroy(){
      window.removeEventListener("resize", this.updateColor);
   }

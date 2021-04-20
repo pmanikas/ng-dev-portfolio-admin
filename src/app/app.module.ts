@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HTTP_INTERCEPTORS, HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
@@ -79,6 +80,7 @@ import { ServicesDetailsComponent } from './pages/admin/services/services-detail
     HttpClientJsonpModule,
     BrowserModule,
     AppRoutingModule,
+    NgbModule,
     FormsModule,
     ReactiveFormsModule,
     ToastrModule.forRoot(),
