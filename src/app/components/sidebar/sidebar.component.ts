@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input } from "@angular/core";
 import { MenuItem } from "./../../models/menu-item.model";
 
 @Component({
@@ -7,14 +7,10 @@ import { MenuItem } from "./../../models/menu-item.model";
   styleUrls: ["./sidebar.component.css"]
 })
 
-export class SidebarComponent implements OnInit {
+export class SidebarComponent {
 
   @Input() menuItems: MenuItem[] = [];
 
   constructor() {}
-
-  ngOnInit() {
-
-  }
 
 }

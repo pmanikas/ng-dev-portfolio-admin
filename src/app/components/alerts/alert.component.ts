@@ -3,7 +3,7 @@ import { AlertService } from './../../services/alert.service';
 import { ToastContainerDirective, ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'dj-alert',
+  selector: 'app-alert',
   templateUrl: 'alert.component.html',
 })
 export class AlertComponent implements OnInit, OnDestroy {

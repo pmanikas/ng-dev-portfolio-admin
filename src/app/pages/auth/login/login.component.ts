@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { AlertService } from '../../../services/alert.service';
@@ -9,16 +9,16 @@ import { Router } from '@angular/router';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
   public form: FormGroup = this.formBuilder.group({
     username: ['', [Validators.required]],
     password: ['', [Validators.required, Validators.minLength(6)]],
   });
 
-  public submitted: boolean = false;
-  public success: boolean = false;
-  public error: boolean = false;
-  public errorMessage: string = '';
+  public submitted = false;
+  public success = false;
+  public error = false;
+  public errorMessage = '';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -27,15 +27,13 @@ export class LoginComponent implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit(): void {}
-
   public changeInputHandler(): void {
     this.submitted = false;
   }
 
   public submitHandler(): void {
     this.submitted = true;
-    if (this.form.invalid) return;
+    if (this.form.invalid) { return; }
 
     this.submitForm();
   }
